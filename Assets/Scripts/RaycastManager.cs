@@ -22,8 +22,9 @@ public class RaycastManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0)) {
                 GlobalGameManager.Score++;
-                Debug.Log(hit.collider.name);
-                Destroy(hit.collider.gameObject);
+                hit.collider.transform.GetChild(2).gameObject.SetActive(true);
+                hit.collider.transform.GetChild(0).gameObject.SetActive(false);
+                hit.collider.transform.GetChild(1).gameObject.SetActive(false);
                 ScoreValueChanged();
             }
         }

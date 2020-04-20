@@ -17,7 +17,12 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         ChangeScoreValue();
+        ChangeTimerValue();
         RaycastManager.OnScoreValueChangedEvent += ChangeScoreValue;
+        GlobalGameManager.OnTimerValueChangedEvent += ChangeTimerValue;
+        GlobalGameManager.OnGameEndEvent += ShowEndGamePanel;
+
+        m_EndGamePanel.SetActive(false);
     }
 
     [SerializeField] private Text m_ScoreText;
@@ -26,7 +31,25 @@ public class UIManager : MonoBehaviour
         m_ScoreText.text = String.Format("Score: {0}", GlobalGameManager.Score);
     }
 
+    [SerializeField] private Text m_TimerText;
 
-    
+    private void ChangeTimerValue() {
+        m_TimerText.text = String.Format("{0} S", GlobalGameManager.Timer);
+    }
 
+    [SerializeField] private GameObject m_EndGamePanel;
+    [SerializeField] private Text m_EndGameScoreText;
+
+    private void ShowEndGamePanel() {
+        /*m_EndGamePanel.SetActive(isActive);
+        SetActiveGameplayUI(isActive);
+
+        if(isActive) m_EndGameScoreText.text = String.Format("YOUR SCORE: {0}", GlobalGameManager.Score);*/
+    }
+
+    [SerializeField] private GameObject m_GameplayUI;
+
+    private void SetActiveGameplayUI(bool state) {
+        m_GameplayUI.SetActive(state);
+    }
 }
