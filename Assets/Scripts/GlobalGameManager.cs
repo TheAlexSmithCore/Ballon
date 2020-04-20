@@ -12,6 +12,8 @@ public class GlobalGameManager : MonoBehaviour
 
     public static int GameDuration { get; private set; } = 60;
 
+    BalloonsPooling m_BalloonsPooling;
+
     public static event Action OnTimerValueChangedEvent;
     public void TimerValueChanged()
     {
@@ -19,15 +21,12 @@ public class GlobalGameManager : MonoBehaviour
         OnTimerValueChangedEvent();
     }
 
-    public static event Action OnGameEndEvent;
-    public void GameEnded()
-    {
-        if (OnGameEndEvent == null) { return; }
-        OnGameEndEvent();
-    }
+    public delegate void GameEnded(bool isTrue);
+    public static GameEnded OnGameEndedEvent;
 
     private void Start() {
         Timer = GameDuration;
+        m_BalloonsPooling = BalloonsPooling.instance;
 
         StartCoroutine(GameTimer());
     }
@@ -40,13 +39,15 @@ public class GlobalGameManager : MonoBehaviour
             TimerValueChanged();
         }
         Paused = true;
-        GameEnded();
+        OnGameEndedEvent(true);
+        m_BalloonsPooling.DisableAllBalloons();
+        Score = 0;
     }
 
     public void RestartButtonPressed() {
         Paused = false;
-        GameEnded();
         Timer = GameDuration;
+        OnGameEndedEvent(false);
         StartCoroutine(GameTimer());
     }
 

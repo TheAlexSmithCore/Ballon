@@ -1,28 +1,56 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BalloonsPooling : MonoBehaviour
 {
-    public static List<GameObject> Balloons = new List<GameObject>();
+    #region Singleton
+    public static BalloonsPooling instance;
+    #endregion
 
-    [SerializeField] private Transform m_BalloonsParent;
+    private void Awake()
+    {
+        instance = this;
+    }
 
-    public static void SetupBalloonsList(Transform balloonsParent) {
-        if(Balloons.Count > 0) { Debug.LogError("Ballons List Exists"); return; }
-        Balloons.Clear();
-        for (int i = 0; i < balloonsParent.childCount; i++)
+    public static List<GameObject> Balloons;
+
+    [SerializeField] private GameObject m_BalloonPrefab;
+    [SerializeField] private int m_AmountToPool { get; } = 10;
+
+    private void Start() {
+        Balloons = new List<GameObject>();
+        for (int i = 0; i < m_AmountToPool; i++)
         {
-            Balloons.Add(balloonsParent.GetChild(i).gameObject);
+            GameObject balloon = (GameObject)Instantiate(m_BalloonPrefab);
+            balloon.transform.SetParent(this.transform);
+            balloon.SetActive(false);
+            Balloons.Add(balloon);
         }
     }
 
-    public static GameObject GetDisabledObject(Transform balloonsParent) {
-        if (Balloons.Count > 0) { Debug.LogError("Ballons List Empty"); return null; }
-        for (int i = 0; i < balloonsParent.childCount; i++) {
-            GameObject balloon = balloonsParent.GetChild(i).gameObject;
-            if (balloon.activeSelf) {
-                return balloon;
+    public void DisableBalloon(bool disableMainObject,GameObject balloon) {
+        balloon.transform.GetChild(0).gameObject.SetActive(false);
+        balloon.transform.GetChild(1).gameObject.SetActive(false);
+        balloon.transform.GetChild(2).gameObject.SetActive(!disableMainObject);
+        balloon.GetComponent<BalloonMotor>().enabled = false;
+        if(!disableMainObject) { return; }
+        balloon.gameObject.SetActive(false);
+    }
+
+    public void DisableAllBalloons() {
+        for (int i = 0; i < Balloons.Count; i++)
+        {
+            Balloons[i].SetActive(false);
+        }
+    }
+
+    public GameObject GetPooledBalloon()
+    {
+        for (int i = 0; i < Balloons.Count; i++)
+        {
+            if (!Balloons[i].activeInHierarchy)
+            {
+                return Balloons[i];
             }
         }
         return null;
