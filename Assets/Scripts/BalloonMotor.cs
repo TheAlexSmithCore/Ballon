@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class BalloonMotor : MonoBehaviour
 {
-
     private Rigidbody m_rigidbody;
 
-    public float SpeedModifier { get; set; }
+    public float SpeedModifier { get;set; }
+    public int ScoreCost { get; set; }
 
-    BalloonsPooling m_BalloonsPooling;
     Vector3 m_BalloonToScreenPosition;
 
     private void Start() {
         m_rigidbody = GetComponent<Rigidbody>();
-        m_BalloonsPooling = BalloonsPooling.instance;
     }
 
-    private void Update() {
+    private void LateUpdate() {
         m_BalloonToScreenPosition = Camera.main.WorldToViewportPoint(this.transform.position);
         if (m_BalloonToScreenPosition.y > 1.25f) {
-            m_BalloonsPooling.DisableBalloon(true,this.gameObject);
+            BalloonsPooling.ChangeBalloonState(this.gameObject, false, false);
         }
     }
 

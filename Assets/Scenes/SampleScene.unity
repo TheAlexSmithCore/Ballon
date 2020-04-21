@@ -130,10 +130,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6737552}
   - component: {fileID: 6737554}
-  - component: {fileID: 6737553}
   - component: {fileID: 6737555}
-  - component: {fileID: 6737556}
   - component: {fileID: 6737557}
+  - component: {fileID: 6737553}
+  - component: {fileID: 6737556}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6737551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33450b7e883f86f45a8ac31d952da871, type: 3}
+  m_Script: {fileID: 11500000, guid: b9d91e14cb75654478c3b91480667135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6737556
@@ -217,9 +217,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6737551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ae6ed10883d13643a37092f9243ee33, type: 3}
+  m_Script: {fileID: 11500000, guid: 0af320fc647b46a499f956e92297c3e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_BalloonClickMouseKey: 323
 --- !u!1 &260006595
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,6 +907,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &965268174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 965268175}
+  - component: {fileID: 965268176}
+  - component: {fileID: 965268177}
+  m_Layer: 5
+  m_Name: ScoreCostPooling
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &965268175
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965268174}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1854832654}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &965268176
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965268174}
+  m_CullTransparentMesh: 0
+--- !u!114 &965268177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965268174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d67549206be979542bbddae6bd082908, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items: []
+  m_PrefabToPool: {fileID: 1836157843030155141, guid: 4ceef7ddc9a304847a53ceb603517fca,
+    type: 3}
+  m_AmountToPool: 10
 --- !u!1 &996518769
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,8 +1636,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe6d6f594d07704da1bb3bc0f87be97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BalloonPrefab: {fileID: 533403106566572179, guid: c43d85fae54cb9442a9d78e33a55d263,
+  Items: []
+  m_PrefabToPool: {fileID: 533403106566572179, guid: c43d85fae54cb9442a9d78e33a55d263,
     type: 3}
+  m_AmountToPool: 10
 --- !u!4 &1572471085
 Transform:
   m_ObjectHideFlags: 0
@@ -1619,6 +1683,7 @@ RectTransform:
   m_Children:
   - {fileID: 1284453296}
   - {fileID: 1348825250}
+  - {fileID: 965268175}
   m_Father: {fileID: 841163589}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
